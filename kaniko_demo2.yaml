@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: kaniko
+#    image: gcr.io/kaniko-project/executor:latest
+    image: registry.aliyuncs.com/kaniko-project/executor:latest
+    args:
+    - "--dockerfile=/python-docker/Dockerfile"
+    - "--context=gs:/python-docker/"
+    - "--insecure=true"
+    - "--skip-tls-verify=true"
+    - "--destination=ghost.harbor.com/library/python-docker:v1.0>"
+    volumeMounts:
+    - name: docker-config
+      mountPath: /kaniko/.docker/
+    - name: python-docker
+      mountPath: /python-docker
+  restartPolicy: Never
+  volumes:
+  - name: docker-config
+    configMap:
+      name: docker-config
+  - name: python-docker
+    hostPath: 
+      path: /root/python-docker

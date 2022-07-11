@@ -1,0 +1,8 @@
+{   
+    "auths": {
+        "ghost.harbor.com": {
+            "auth": "YWRtaW46SGFyYm9yMTIzNDUK"
+       }
+    }
+    
+}
